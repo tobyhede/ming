@@ -15,8 +15,20 @@
   </form>    
 </div>
 
-<ul>  
-<% @documents.each do |doc| %>
-  <li><<%= doc.inspect %></li>
-<% end %>
-</ul>
+
+<table id="collection_documents">  
+  <tr>  
+    <% @documents.collect{|doc| doc.keys}.flatten.uniq.each do |key| -%>  
+      <th><%= key %></th>    
+    <% end -%> 
+  </tr>
+      
+  <% @documents.each do |doc| -%>
+    <tr>   
+      <% doc.each do |key, value| -%>       
+        <td><%= value %></td>
+      <% end -%>  
+    </tr>    
+  <% end -%>
+
+</table>

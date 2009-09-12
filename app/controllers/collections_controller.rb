@@ -4,7 +4,7 @@ class CollectionsController < ApplicationController
   
   def show    
     @collection = @database.collection(params[:id])
-    @documents = @collection.find()
+    @documents = @collection.find().to_a
   
     # result = ActiveSupport::JSON.decode("{test, value}")   
     # logger.debug("=====================")
