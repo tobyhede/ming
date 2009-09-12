@@ -2,13 +2,27 @@
 
 Ming is the ruler of Mongo.
 
-Ming is a web-based manager for MongoDB written using Ruby on Rails.
+Ming is a web-based manager for MongoDB (http://www.mongodb.org/) written using Ruby on Rails.
+
 Currently in extreme Alpha state.
 
 
+= Installation
 
-== Dependencies
+=== Requirements
 
-MongoDB - http://www.mongodb.org/
+* MongoDB
+* Ruby 
+* Gems : rails, mongodb-mongo, mongodb-mongo_ext
 
-Mongo Ruby Driver -http://github.com/mongodb/mongo-ruby-driver/tree/master
+
+For details on the Mongo Ruby Driver:
+
+    http://github.com/mongodb/mongo-ruby-driver/tree/master
+
+
+To install the gems:
+    
+    $ gem sources -a http://gems.github.com
+    $ sudo gem install rails mongodb-mongo mongodb-mongo_ext
+
