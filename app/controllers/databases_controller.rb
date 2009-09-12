@@ -7,6 +7,11 @@ class DatabasesController < ApplicationController
   def show    
     @database = @connection.db(params[:id])
     @collections = @database.collection_names
+    @collections.delete("system.indexes")
+    # @collections.each{|c|logger.debug(c)}
+    # collection = @database.collection("Another")
+    # 10.times { |i| collection.insert({'X' => i+1}) }
+    # collection.find().each { |doc| logger.debug doc.inspect }
   end
   
   

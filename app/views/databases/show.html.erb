@@ -4,7 +4,7 @@
 
 <h1><%= @database.name%></h1>
 <ul>  
-<% @collections.each do |c| %>
-  <li><%= c %></li>
+<% @collections.each do |name| %>
+  <li><%= link_to name, database_collection_path(@database.name, name) %></li>
 <% end %>
 </ul>

@@ -2,7 +2,9 @@ class CollectionsController < ApplicationController
   
   before_filter :set_database
   def show    
-
+    @collection = @database.collection(params[:id])
+    @documents = @collection.find()
+    # logger.debug(@documents)
   end
   
   

@@ -4,6 +4,6 @@
 <h1>Databases</h1>
 <ul>  
 <% @databases.each do |name, size| %>
-  <li><%= link_to name, database_path(name) %></li>
+  <li><%= link_to name, database_path(name) %> <%= "" %></li>
 <% end %>
 </ul>

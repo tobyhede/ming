@@ -4,3 +4,12 @@
   
 <h1>Collection in <%= @database.name %></h1>
   
+<diV>
+ <%= pluralize(@documents.count, "document") %>
+</div>
+
+<ul>  
+<% @documents.each do |doc| %>
+  <li><<%= doc %>/li>
+<% end %>
+</ul>
