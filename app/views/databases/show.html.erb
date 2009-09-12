@@ -1,0 +1,10 @@
+<ul id="menu">    
+  <li><%= link_to "Create Collection", new_database_collection_path(@database.name), :id => "create_collection" %></li>
+</ul>
+
+<h1><%= @database.name%></h1>
+<ul>  
+<% @collections.each do |c| %>
+  <li><%= c %></li>
+<% end %>
+</ul>

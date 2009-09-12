@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+
+	<title>MongoR</title>
+
+	<!-- Content Types -->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-style-type" content="text/css; charset=utf-8" />
+	<meta http-equiv="content-script-type" content="text/javascript; charset=utf-8" />
+
+	<link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+
+	<%= stylesheet_link_tag "jquery-ui-theme/jquery-ui-1.7.2.custom.css" %>		
+	<%= stylesheet_link_tag "screen.css" %>		
+
+  <%= javascript_include_tag "jquery-1.3.2.js", "jquery-ui-1.7.js", "application" %>	
+
+</head>
+
+<body>
+  <% if flash[:error] %>
+    <div id="flash" class="ui-helper-clearfix ui-widget ui-state-error ui-corner-all">
+      <span class="ui-icon ui-icon-alert"></span> 
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+
+  <% if flash[:success] %>
+    <div id="flash" class="ui-helper-clearfix ui-widget ui-state-highlight ui-corner-all">
+      <span class="ui-icon ui-icon-info"></span>
+      <%= flash[:success] %>
+    </div>
+  <% end %>
+
+ <%= yield %>
+</body>
+
+</html>

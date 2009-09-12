@@ -1,0 +1,13 @@
+== Welcome to Ming
+
+Ming is a web-based manager for MongoDB written using Ruby on Rails.
+
+Currently in extreme Alpha state.
+
+
+
+== Dependencies
+
+MongoDB - http://www.mongodb.org/
+
+Mongo Ruby Driver -http://github.com/mongodb/mongo-ruby-driver/tree/master

@@ -1,0 +1,14 @@
+<ul id="menu">    
+  <li><%= link_to @database.name, database_path(@database.name) %></li>
+</ul>  
+  
+<h1>Create Collection in <%= @database.name %></h1>
+  
+<div id="create_collection_form">
+  <form action="<%= database_collections_path(@database.name) %>" method="post">    
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <label for="name">Name:</label>
+    <%= text_field_tag :name, params[:name] %>
+    <%= submit_tag "Create", :class => "ui-state-default ui-corner-all" %>
+  </form>    
+</div>

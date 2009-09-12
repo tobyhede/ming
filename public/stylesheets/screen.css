@@ -1,0 +1,30 @@
+body {
+	font-family:"Lucida Grande",Verdana,Sans-serif;
+	margin:0;
+	padding:2em;
+	font-size:14px;
+}
+
+h1 {
+	font-size:1.25em;
+}
+#flash {
+	font-size:1em;
+	padding:0.5em;
+}
+
+#flash p{	
+	padding:0 0.5em 0 0;
+	float:right;
+}
+
+
+#flash span.ui-icon {
+	float:left;
+	margin-right:0.5em;
+}
+
+input[type=submit] {
+	font-size:1em;
+	padding:0.2em 0.5em 0.2em 0.5em;
+}
