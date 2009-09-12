@@ -36,7 +36,9 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
 
   map.resources :databases do |databases|
-    databases.resources :collections
+    databases.resources :collections do |collection|
+      collection.resources :documents
+    end  
   end
 
   # Install the default routes as the lowest priority.

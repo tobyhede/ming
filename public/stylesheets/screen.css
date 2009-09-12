@@ -18,13 +18,20 @@ h1 {
 	float:right;
 }
 
-
 #flash span.ui-icon {
 	float:left;
 	margin-right:0.5em;
 }
 
+
+
 input[type=submit] {
 	font-size:1em;
 	padding:0.2em 0.5em 0.2em 0.5em;
+}
+
+.json_editor {
+	display:block;
+	width:500px;
+	height:200px;
 }
