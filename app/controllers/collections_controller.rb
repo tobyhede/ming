@@ -4,18 +4,30 @@ class CollectionsController < ApplicationController
   
   def show    
     @collection = @database.collection(params[:id])
-    @documents = @collection.find().to_a
+   
+    @documents = @collection.find("_id" => "_design")
     
-    @design = @documents.find{|d| d["_id"] == "_design"}
-    
-    if @design
+    if @documents.count()
+      @design = @documents.next_object
       @columns = @design["columns"]
     else
+      @documents = @collection.find.to_a
       @columns = @documents.collect{|doc| doc.keys}.flatten.uniq
     end
     
-    @documents.delete(@design)
-    
+    # logger.debug("================================")
+    # logger.debug(@columns)
+    # 
+    # @design = @documents.find{|d| d["_id"] == "_design"}
+    #     
+    # if @design
+    #   @columns = @design["columns"]
+    # else
+    #   @columns = @documents.collect{|doc| doc.keys}.flatten.uniq
+    # end
+    # 
+    # @documents.delete(@design)
+    # 
     # result = ActiveSupport::JSON.decode("{test, value}")   
     # logger.debug("=====================")
     # logger.debug(result)
@@ -44,7 +56,11 @@ class CollectionsController < ApplicationController
   
   protected
   
+  
   def set_database
     @database = @connection.db(params[:database_id])
   end
+  
+  
+  
 end

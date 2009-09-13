@@ -4,5 +4,5 @@ $(document).ready( function() {
 	// 	return false;
 	// });
 	
-	$("#collection_documents").flexigrid({height:"auto",striped:false});			
+	// $("#collection_documents").flexigrid({height:"auto",striped:false});			
 });

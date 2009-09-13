@@ -4,6 +4,25 @@ class DocumentsController < ApplicationController
   before_filter :set_database
   before_filter :set_collection
   
+  def index    
+    # {
+    #   "sortname"=>"undefined", "qtype"=>"", "page"=>"1", 
+    #   "sortorder"=>"undefined", "rp"=>"15", 
+    #   "query"=>""
+    # }
+    
+    @page = params[:page] || 1
+    @limit = params[:rp] || 15
+    
+    @count = @collection.find().count()
+    @documents = @collection.find({},{:offset => @page.to_i, :limit => @limit.to_i}).to_a
+
+    respond_to do |format|
+      format.html { render :action => "index.json", :layout => false }   
+      format.js   { render :action => "index.json", :layout => false }
+    end
+  end
+  
   
   def create 
     # logger.debug("DocumentsController::create")  

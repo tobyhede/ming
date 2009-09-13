@@ -20,7 +20,7 @@
   <tr>  
     <th>_id</th>  
     <% @columns.each do |value| -%>    
-      <th><%= value %></th>  
+      <th><%= value.titleize %></th>  
     <% end -%> 
   </tr>
       
@@ -34,6 +34,27 @@
   <% end -%>
 
 </table>
+
+<div id="collection_documents_url" class="hidden">
+  <%= database_collection_documents_path(@database.name, @collection.name) %>
+</div>
+
+  <script type="text/javascript">
+    $("#collection_documents").flexigrid({
+  			url: "<%= database_collection_documents_path(@database.name, @collection.name) %>",
+  			method: "get",
+  			dataType: 'json',
+  			sortable: true,
+  			striped: false,
+  			usepager: true,
+  			title: "Documents",
+  			useRp: true,
+  			rp: 15,
+  			width: 700,
+  			height: 200
+    });  
+  </script>		
+			
 <!--
   <% @documents.each do |doc| -%>
     <ul>   
