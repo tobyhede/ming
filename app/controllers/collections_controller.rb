@@ -5,7 +5,17 @@ class CollectionsController < ApplicationController
   def show    
     @collection = @database.collection(params[:id])
     @documents = @collection.find().to_a
-  
+    
+    @design = @documents.find{|d| d["_id"] == "_design"}
+    
+    if @design
+      @columns = @design["columns"]
+    else
+      @columns = @documents.collect{|doc| doc.keys}.flatten.uniq
+    end
+    
+    @documents.delete(@design)
+    
     # result = ActiveSupport::JSON.decode("{test, value}")   
     # logger.debug("=====================")
     # logger.debug(result)

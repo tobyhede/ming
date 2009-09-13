@@ -18,17 +18,28 @@
 
 <table id="collection_documents">  
   <tr>  
-    <% @documents.collect{|doc| doc.keys}.flatten.uniq.each do |key| -%>  
-      <th><%= key %></th>    
+    <th>_id</th>  
+    <% @columns.each do |value| -%>    
+      <th><%= value %></th>  
     <% end -%> 
   </tr>
       
   <% @documents.each do |doc| -%>
-    <tr>   
-      <% doc.each do |key, value| -%>       
-        <td><%= value %></td>
-      <% end -%>  
+    <tr>  
+      <td><%= doc["_id"] %></td>   
+      <% @columns.each do |value| -%>    
+        <td><%= doc[value] %></td>  
+      <% end -%> 
     </tr>    
   <% end -%>
 
 </table>
+<!--
+  <% @documents.each do |doc| -%>
+    <ul>   
+      <% doc.each do |key, value| -%>    
+        <li><%= key %>: <%= value %></li>  
+      <% end -%> 
+    </ul>    
+  <% end -%>
+-->    
