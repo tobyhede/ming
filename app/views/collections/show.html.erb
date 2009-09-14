@@ -1,5 +1,6 @@
 <ul id="menu">    
   <li><%= link_to @database.name, database_path(@database.name) %></li>
+  <li><a href="#" onclick="$('#create_collection_form').dialog({height:'auto',width:'auto'})">Create Document</a></li>
 </ul>  
   
 <h1>Collection in <%= @database.name %></h1>
@@ -7,7 +8,7 @@
  <%= pluralize(@documents.count, "document") %>
 </div>
 
-<div id="create_collection_form">
+<div id="create_collection_form" style="display:none;">
   <form action="<%= database_collection_documents_path(@database.name, @collection.name) %>" method="post">    
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= text_area_tag :document, params[:document], :class => "json_editor" %>
@@ -20,7 +21,7 @@
   <tr>  
     <th>_id</th>  
     <% @columns.each do |value| -%>    
-      <th><%= value.titleize %></th>  
+      <th><%= value %></th>  
     <% end -%> 
   </tr>
       
@@ -42,6 +43,10 @@
   <script type="text/javascript">
     $("#collection_documents").flexigrid({
   			url: "<%= database_collection_documents_path(@database.name, @collection.name) %>",
+        //        colModel : [
+        // {name : 'iso'},
+        // {name : 'name'},
+        // ],
   			method: "get",
   			dataType: 'json',
   			sortable: true,
