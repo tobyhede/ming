@@ -135,8 +135,9 @@ input[type=submit] {
 	display:block;
 	width:500px;
 	height:200px;
+	margin-bottom:0.5em;
 }
 
 .hidden {
-	display:none;
+/*	display:none;*/
 }

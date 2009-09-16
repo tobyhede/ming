@@ -45,8 +45,9 @@
 
 <%= will_paginate(@documents) %>
 
-
-<div id="create_document_form">
+<div id="design_document" style="display:none;"><%= ActiveSupport::JSON.encode(@design) %></div>
+  
+<div id="create_document_form" class="hidden">
   <form action="<%= database_collection_documents_path(@database.name, @collection.name) %>" method="post">    
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= text_area_tag :document, params[:document], :class => "json_editor" %>
@@ -54,10 +55,32 @@
   </form>    
 </div>
 
+<div id="edit_document_form" class="hidden">
+  <form action="" method="post">    
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag :_id, "" %>
+    <%= text_area_tag :document, params[:document], :id => "edit_document", :class => "json_editor" %>
+    <%= submit_tag "Save", :class => "ui-state-default ui-corner-all" %>
+  </form>    
+</div>
+
 
 <% content_for :javascript do -%>
-  $("#create_document_form").hide();
+  $(".hidden").hide();
+  
   $("table:sortable tbody tr:odd").addClass("odd");
+        
+  $("#create_document").click(function(){  
+    $('#create_document_form').dialog("open");
+  });
+  
+  $("#edit_design_document").click(function(){
+    design_document = $("#design_document").html();
+    $("#_id").val("_design"); 
+    $("#edit_document").val(design_document);
+    $("#edit_document_form").dialog("open");
+  });
+
   $('#create_document_form').dialog({
     title:"Create Document",
     height:'auto',
@@ -69,13 +92,18 @@
       opacity: 0.5
     },
   });
-      
-  $("#create_document").click(function(){  
-    $('#create_document_form').dialog("open");
-  });
   
-  $("#edit_design_document").click(function(){
-    $('#create_document_form').dialog({height:'auto',width:'auto'})    
+  $('#edit_document_form').dialog({
+    title:"Edit Document",
+    height:'auto',
+    width:'auto',
+    modal:true,
+    autoOpen:false,
+    overlay: {
+    backgroundColor: '#000000',
+      opacity: 0.5
+    },
   });
-    
+        
+        
 <% end -%>
