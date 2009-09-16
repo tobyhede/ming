@@ -18,54 +18,73 @@
 
 
 <table id="collection_documents">  
+  <thead>
   <tr>  
     <th>_id</th>  
     <% @columns.each do |value| -%>    
       <th><%= value %></th>  
     <% end -%> 
-  </tr>
-      
-  <% @documents.each do |doc| -%>
-    <tr>  
-      <td><%= doc["_id"] %></td>   
-      <% @columns.each do |value| -%>    
-        <td><%= doc[value] %></td>  
-      <% end -%> 
-    </tr>    
-  <% end -%>
-
+  </tr>    
+  </thead>  
+  <tbody>
+		<tr>
+			<td colspan="<%= @columns.size %>" class="dataTables_empty">Loading data from server</td>
+		</tr>    
+  </tbody>    
+  <tfoot>
+  </tfoot>  
 </table>
+
 
 <div id="collection_documents_url" class="hidden">
   <%= database_collection_documents_path(@database.name, @collection.name) %>
 </div>
 
   <script type="text/javascript">
-    $("#collection_documents").flexigrid({
-  			url: "<%= database_collection_documents_path(@database.name, @collection.name) %>",
-        //        colModel : [
-        // {name : 'iso'},
-        // {name : 'name'},
-        // ],
-  			method: "get",
-  			dataType: 'json',
-  			sortable: true,
-  			striped: false,
-  			usepager: true,
-  			title: "Documents",
-  			useRp: true,
-  			rp: 15,
-  			width: 700,
-  			height: 200
-    });  
+  
+    $.fn.dataTableExt.oApi.fnAddData = function() {
+
+    };
+
+
+    $('#collection_documents').dataTable( {
+      // "bProcessing": true,
+  		"bServerSide": true,
+  		"bJQueryUI": true,
+  		"sAjaxSource": $('#collection_documents_url').html(),
+  	} );
+
+  
+  //     colModel = [];
+  //     
+  //     $("#collection_documents tr th").each(function(){
+  //       colModel.push({display:$(this).html(),name:$(this).html(), sortable:true})
+  //     });
+  // 
+  // $.ajax({
+  //    url: $('#collection_documents_url').html(),
+  //    success: function(data){
+  //      console.log(data); 
+  //    }
+  //  });
+  //                   
+    // $("#flex1").flexigrid({
+    //        url: $('#collection_documents_url').html(),
+    //     colModel : colModel,
+    //        method: "get",
+    //        dataType: 'json',
+    //        usepager: true,
+    //        title: "Documents",
+    //        useRp: true,
+    //        rp: 15,
+    //        width: 700,
+    //        height: 200
+    // });  
   </script>		
 			
-<!--
-  <% @documents.each do |doc| -%>
-    <ul>   
-      <% doc.each do |key, value| -%>    
-        <li><%= key %>: <%= value %></li>  
-      <% end -%> 
-    </ul>    
-  <% end -%>
--->    
+
+  <% @design.each do |key, value| -%>    
+    <p><%= key %>: <%= value %></p>  
+  <% end -%> 
+
+<!-- -->    

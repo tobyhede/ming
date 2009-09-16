@@ -1,5 +1,15 @@
 {
-page: <%= @page %>,
-total: <%= @count %>,
-rows: <%= ActiveSupport::JSON.encode(@documents) %>
+"sEcho": 1, 
+"iTotalRecords": <%= @count %>,
+"iTotalDisplayRecords": <%= @documents.size %>,
+"aaData": [
+  <% @documents.each do |doc| -%>    
+  [
+    <% doc.each do |key, value| -%>    
+      "<%= value %>",
+    <% end -%> 
+  ]
+  <% end -%> 
+]
 }
+
