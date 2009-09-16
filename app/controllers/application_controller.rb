@@ -1,4 +1,5 @@
 require 'mongo'
+require 'will_paginate'
 
 class ApplicationController < ActionController::Base
   include Mongo

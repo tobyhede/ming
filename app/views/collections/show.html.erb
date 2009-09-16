@@ -1,90 +1,49 @@
 <ul id="menu">    
   <li><%= link_to @database.name, database_path(@database.name) %></li>
-  <li><a href="#" onclick="$('#create_collection_form').dialog({height:'auto',width:'auto'})">Create Document</a></li>
+  <li><%= @collection.name %></li>  
+  <li><a href="#create_collection" onclick="$('#create_collection').dialog({height:'auto',width:'auto'})">Create Document</a></li>
 </ul>  
   
-<h1>Collection in <%= @database.name %></h1>
+<h1><%= @collection.name %> in <%= @database.name %></h1>
 <div id="collection">
- <%= pluralize(@documents.count, "document") %>
-</div>
-
-<div id="create_collection_form" style="display:none;">
-  <form action="<%= database_collection_documents_path(@database.name, @collection.name) %>" method="post">    
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <%= text_area_tag :document, params[:document], :class => "json_editor" %>
-    <%= submit_tag "Create", :class => "ui-state-default ui-corner-all" %>
-  </form>    
+ Viewing <%= pluralize(@documents.count, "document") %> of <%= @count %>
 </div>
 
 
 <table id="collection_documents">  
   <thead>
-  <tr>  
-    <th>_id</th>  
+  <tr>   
     <% @columns.each do |value| -%>    
       <th><%= value %></th>  
     <% end -%> 
   </tr>    
   </thead>  
   <tbody>
-		<tr>
-			<td colspan="<%= @columns.size %>" class="dataTables_empty">Loading data from server</td>
-		</tr>    
+    <% @documents.each do |doc| -%>      
+		<tr id="document_<%= doc["_id"] %>">    
+      <% @columns.each do |value| -%>    
+        <% if value == "_data"%> 
+          <td><%= ActiveSupport::JSON.encode(doc) %></td>  
+        <% else %>
+          <td><%= doc[value] %></td>  
+        <% end -%> 
+      <% end -%> 
+		</tr>      
+    <% end -%>    
   </tbody>    
   <tfoot>
   </tfoot>  
 </table>
 
+<%= will_paginate(@documents) %>
 
-<div id="collection_documents_url" class="hidden">
-  <%= database_collection_documents_path(@database.name, @collection.name) %>
+
+<div id="create_collection" style="display:none;">
+  <form action="<%= database_collection_documents_path(@database.name, @collection.name) %>" method="post">    
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= text_area_tag :document, params[:document], :class => "json_editor" %>
+    <%= submit_tag "Create", :class => "ui-state-default ui-corner-all" %>
+  </form>    
 </div>
-
-  <script type="text/javascript">
-  
-    $.fn.dataTableExt.oApi.fnAddData = function() {
-
-    };
-
-
-    $('#collection_documents').dataTable( {
-      // "bProcessing": true,
-  		"bServerSide": true,
-  		"bJQueryUI": true,
-  		"sAjaxSource": $('#collection_documents_url').html(),
-  	} );
-
-  
-  //     colModel = [];
-  //     
-  //     $("#collection_documents tr th").each(function(){
-  //       colModel.push({display:$(this).html(),name:$(this).html(), sortable:true})
-  //     });
-  // 
-  // $.ajax({
-  //    url: $('#collection_documents_url').html(),
-  //    success: function(data){
-  //      console.log(data); 
-  //    }
-  //  });
-  //                   
-    // $("#flex1").flexigrid({
-    //        url: $('#collection_documents_url').html(),
-    //     colModel : colModel,
-    //        method: "get",
-    //        dataType: 'json',
-    //        usepager: true,
-    //        title: "Documents",
-    //        useRp: true,
-    //        rp: 15,
-    //        width: 700,
-    //        height: 200
-    // });  
-  </script>		
-			
-
-  <% @design.each do |key, value| -%>    
-    <p><%= key %>: <%= value %></p>  
-  <% end -%> 
 
 <!-- -->    
