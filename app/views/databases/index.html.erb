@@ -1,6 +1,11 @@
+<div id="menu" class="ui-tabs ui-widget ui-widget-content ui-helper-clearfix"> 
+  Databases
+</div> 
+
 <ul id="menu">  
   <li><%= link_to "Create", new_database_path, :id => "create_database" %></li>
 </ul>
+
 <h1>Databases</h1>
 <ul>  
 <% @databases.each do |name, size| %>

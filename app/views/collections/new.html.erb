@@ -1,6 +1,10 @@
-<ul id="menu">    
-  <li><%= link_to @database.name, database_path(@database.name) %></li>
-</ul>  
+
+<div id="menu" class="ui-tabs ui-widget ui-widget-content ui-helper-clearfix"> 
+  <%= link_to "Databases", databases_path() %> >
+  <%= link_to @database.name, database_path(@database.name) %> >    
+  Create Collection 
+</div> 
+
   
 <h1>Create Collection in <%= @database.name %></h1>
   

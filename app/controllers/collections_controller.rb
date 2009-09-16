@@ -20,8 +20,7 @@ class CollectionsController < ApplicationController
     # 1000.times do |i| 
     #   @collection.insert({"first_name" => Faker::Name.first_name, "last_name" => Faker::Name.last_name})       
     # end
-    
-    
+        
     @design_document = @collection.find("_id" => "_design")
     
     if @design_document.count() == 1

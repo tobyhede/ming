@@ -1,3 +1,8 @@
+<div id="menu" class="ui-tabs ui-widget ui-widget-content ui-helper-clearfix"> 
+  <%= link_to "Databases", databases_path() %> >
+  <%= @database.name %> 
+</div> 
+
 <ul id="menu">    
   <li><%= link_to "Create Collection", new_database_collection_path(@database.name), :id => "create_collection" %></li>
 </ul>
