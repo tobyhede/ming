@@ -33,7 +33,7 @@ class CollectionsController < ApplicationController
     end
 
     @page = (params[:page] || 1).to_i
-    @per_page = (params[:per_page] || 10).to_i
+    @per_page = (params[:per_page] || 15).to_i
     
     offset = (@page-1) * @per_page
           

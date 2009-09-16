@@ -1,22 +1,22 @@
-<div id="menu" class="ui-widget ui-widget-content ui-helper-clearfix"> 
-  <%= link_to "Databases", databases_path() %> >
+<div id="menu" class="ui-tabs ui-widget ui-widget-content ui-helper-clearfix"> 
+  <%= link_to "Databases", databases_path() %> > 
   <%= link_to @database.name, database_path(@database.name) %> >
   <%= @collection.name %>       
-<div id="actions" class="">   
-  Actions: 
-  <a id="" href="#create_collection" onclick="$('#create_collection').dialog({height:'auto',width:'auto'})">Create Document</a>   
+</div> 
+
+<div id="actions">   
+  <ul>
+    <li> 
+      <a id="create_document" href="#create_document_form">Create Document</a>   
+    </li>
+    <li> 
+      <a id="edit_design_document" href="#edit_design">Edit Design Document</a>   
+    </li>        
 </div>   
 
-</div> 
    
-
- 
- 
 <h1><%= @collection.name %> in <%= @database.name %></h1>
-<div id="collection">
- Viewing <%= pluralize(@documents.count, "document") %> of <%= @count %>
-</div>
-
+<p>Viewing <%= pluralize(@documents.count, "document") %> of <%= @count %></p>
 
 <table id="collection_documents" class="ui-widget ui-helper-reset">  
   <thead class="ui-widget-header">
@@ -45,11 +45,8 @@
 
 <%= will_paginate(@documents) %>
 
-<% content_for :javascript do -%>
-  $("table:sortable tbody tr:odd").addClass("odd");
-<% end -%>
 
-<div id="create_collection" class="ui-helper-hidden-accessible">
+<div id="create_document_form">
   <form action="<%= database_collection_documents_path(@database.name, @collection.name) %>" method="post">    
     <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <%= text_area_tag :document, params[:document], :class => "json_editor" %>
@@ -57,4 +54,28 @@
   </form>    
 </div>
 
-<!-- -->    
+
+<% content_for :javascript do -%>
+  $("#create_document_form").hide();
+  $("table:sortable tbody tr:odd").addClass("odd");
+  $('#create_document_form').dialog({
+    title:"Create Document",
+    height:'auto',
+    width:'auto',
+    modal:true,
+    autoOpen:false,
+    overlay: {
+    backgroundColor: '#000000',
+      opacity: 0.5
+    },
+  });
+      
+  $("#create_document").click(function(){  
+    $('#create_document_form').dialog("open");
+  });
+  
+  $("#edit_design_document").click(function(){
+    $('#create_document_form').dialog({height:'auto',width:'auto'})    
+  });
+    
+<% end -%>
