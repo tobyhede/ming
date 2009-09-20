@@ -7,14 +7,13 @@
 <div id="actions">   
   <ul>
     <li> 
-      <!-- <a id="create_document" href="#create_document_form">Create Document</a> -->   
       <%= link_to "Create Document", new_database_collection_document_path(@database.name, @collection.name), :id => "create_document" %>
     </li>
+    <% if @design -%>
     <li> 
-      <!-- <a id="edit_design_document" href="#edit_design">Edit Design Document</a>    -->
-      <%= link_to "Edit Design Document", edit_database_collection_document_path(@database.name, @collection.name, @design["_id"]), :id => "edit_design_document" %>
-            
+      <%= link_to "Edit Design Document", edit_database_collection_document_path(@database.name, @collection.name, @design["_id"]), :id => "edit_design_document" %>            
     </li>  
+    <% end -%>
   </ul>          
 </div>   
  
@@ -39,7 +38,7 @@
   </thead>  
   <tbody>
     <% @documents.each do |doc| -%>      
-		<tr id="document_<%= doc["_id"] %>">    
+		<tr id="<%= doc["_id"] %>">    
       <% @columns.each do |value| -%>    
         <% if value == "_data"%> 
           <td><%= ActiveSupport::JSON.encode(doc) %></td>  
@@ -61,7 +60,16 @@
   $(".hidden").hide();
   
   $("table:sortable tbody tr:odd").addClass("odd");
-                      
+      
+  $("#collection_documents tr").click(function(){  
+    id = $(this).attr("id");  
+    url = "/databases/<%= @database.name %>/collections/<%= @collection.name %>/documents/" + id + "/edit"
+    console.log(url);
+    $('#edit_document_form').dialog("open");
+    $("#edit_document_form").load(url);         
+    return false;        
+  });                    
+    
   $("#create_document").click(function(){  
     $('#create_document_form').dialog("open");        
     url = $(this).attr("href");    
@@ -83,7 +91,6 @@
     width:'auto',
     modal:true,
     autoOpen:false,
-
     overlay: {backgroundColor: '#000000',opacity: 0.5}
   });
     

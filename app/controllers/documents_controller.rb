@@ -40,7 +40,14 @@ class DocumentsController < ApplicationController
   end
     
   def edit
-    @document = @collection.find({"_id" => params[:id]}).next_object()
+    # @document = @collection.find({"_id" => params[:id]}).next_object()    
+    @document = @collection.find_one({"_id" => params[:id]})
+
+    # if @document
+    #   logger.debug("===========================")    
+    #   logger.debug(@document.to_a)          
+    # end
+        
     respond_to do |format|
       format.js   { render :layout => false }
       # format.html { render }   
@@ -48,7 +55,17 @@ class DocumentsController < ApplicationController
   end
   
   def update
+    @document = @collection.find_one({"_id" => params[:id]})  
+      
+    # logger.debug("===========================")    
+    # logger.debug(@document.to_a)    
     
+    @collection.save
+    
+    respond_to do |format|
+      format.html { redirect_to database_collection_url(@database.name, @collection.name) }   
+      format.js
+    end   
   end
   
   

@@ -26,3 +26,21 @@ To install the gems:
     $ gem sources -a http://gems.github.com
     $ sudo gem install rails mongodb-mongo mongodb-mongo_ext
 
+
+= Design Documents
+
+The table display columns and sort order of a collection can be defined using a Design Document.
+
+A design document has an id of "_design", an optional list of columns and an optional sort order.
+
+Sort order is based on the standard MongoDB sort options (http://www.mongodb.org/display/DOCS/Sorting)
+
+
+=== Sample
+
+    {
+      "_id":"_design",
+      "columns":["first_name","last_name"],
+      "sort":{"last_name":1}
+    }
+

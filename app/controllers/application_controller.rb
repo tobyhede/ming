@@ -14,6 +14,16 @@ class ApplicationController < ActionController::Base
   protected
   
   def set_connection    
-    @connection = Connection.new
+    @connection = Connection.new()
   end
 end
+
+
+class Mongo::Cursor
+  def paginate(page=1, per_page=15)
+    total = self.count
+    paginated_array = WillPaginate::Collection.new(page, per_page, total)
+    paginated_array.concat(self.to_a)
+  end
+end
+  
