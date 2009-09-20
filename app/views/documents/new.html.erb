@@ -1,0 +1,5 @@
+<form action="<%= database_collection_documents_path(@database.name, @collection.name) %>" method="post">    
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <%= text_area_tag :document, params[:document], :class => "json_editor" %>
+  <%= submit_tag "Create", :class => "ui-state-default ui-corner-all" %>
+</form>    

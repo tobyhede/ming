@@ -7,7 +7,6 @@ class DocumentsController < ApplicationController
   before_filter :set_collection
   
   def index    
-
       
     @page = params[:page] || 1
     @limit = params[:rp] || 15
@@ -24,16 +23,34 @@ class DocumentsController < ApplicationController
     end
   end
   
+
+  def new
+    respond_to do |format|
+      # format.html { render }   
+      format.js   { render :layout => false }
+    end    
+  end
   
   def create 
-    # logger.debug("DocumentsController::create")  
-    # logger.debug(params[:document])        
-    # logger.debug(json.class)        
-    # logger.debug(json["name"])  
-        
     json = ActiveSupport::JSON.decode(params[:document])      
     @collection.insert(json);
-    redirect_to database_collection_url(@database.name, @collection.name)
+
+    respond_to do |format|
+      format.html { redirect_to database_collection_url(@database.name, @collection.name) }   
+      format.js
+    end              
+  end
+    
+  def edit
+    @document = @collection.find({"_id" => params[:id]})
+    respond_to do |format|
+      format.html { render }   
+      format.js   { render :layout => false }
+    end 
+  end
+  
+  def update
+    
   end
   
   

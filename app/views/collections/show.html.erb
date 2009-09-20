@@ -7,14 +7,17 @@
 <div id="actions">   
   <ul>
     <li> 
-      <a id="create_document" href="#create_document_form">Create Document</a>   
+      <!-- <a id="create_document" href="#create_document_form">Create Document</a> -->   
+      <%= link_to "Create Document", new_database_collection_document_path(@database.name, @collection.name), :id => "create_document" %>
     </li>
     <li> 
-      <a id="edit_design_document" href="#edit_design">Edit Design Document</a>   
-    </li>        
+      <!-- <a id="edit_design_document" href="#edit_design">Edit Design Document</a>    -->
+      <%= link_to "Edit Design Document", new_database_collection_document_path(@database.name, @collection.name, @design["_id"]) %>
+            
+    </li>  
+  </ul>          
 </div>   
-
-   
+ 
 <h1><%= @collection.name %> in <%= @database.name %></h1>
 <p>Viewing <%= pluralize(@documents.count, "document") %> of <%= @count %></p>
 
@@ -47,39 +50,26 @@
 
 <div id="design_document" style="display:none;"><%= ActiveSupport::JSON.encode(@design) %></div>
   
-<div id="create_document_form" class="hidden">
-  <form action="<%= database_collection_documents_path(@database.name, @collection.name) %>" method="post">    
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <%= text_area_tag :document, params[:document], :class => "json_editor" %>
-    <%= submit_tag "Create", :class => "ui-state-default ui-corner-all" %>
-  </form>    
+<div id="create_document_form" class="hidden"> 
 </div>
 
-<div id="edit_document_form" class="hidden">
-  <form action="" method="post">    
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <%= hidden_field_tag :_id, "" %>
-    <%= text_area_tag :document, params[:document], :id => "edit_document", :class => "json_editor" %>
-    <%= submit_tag "Save", :class => "ui-state-default ui-corner-all" %>
-  </form>    
+<div id="edit_document_form" class="hidden">  
 </div>
-
 
 <% content_for :javascript do -%>
   $(".hidden").hide();
   
   $("table:sortable tbody tr:odd").addClass("odd");
-        
+                      
   $("#create_document").click(function(){  
     $('#create_document_form').dialog("open");
+    return false;
   });
   
   $("#edit_design_document").click(function(){
-    design_document = $("#design_document").html();
-    $("#_id").val("_design"); 
-    $("#edit_document").val(design_document);
-    $("#edit_document_form").dialog("open");
+
   });
+  
 
   $('#create_document_form').dialog({
     title:"Create Document",
@@ -87,11 +77,12 @@
     width:'auto',
     modal:true,
     autoOpen:false,
-    overlay: {
-    backgroundColor: '#000000',
-      opacity: 0.5
+    open:function(e) {
+      $("#create_document_form").load("<%= new_database_collection_document_path(@database.name, @collection.name) %>");
     },
+    overlay: {backgroundColor: '#000000',opacity: 0.5}
   });
+    
   
   $('#edit_document_form').dialog({
     title:"Edit Document",
@@ -99,11 +90,10 @@
     width:'auto',
     modal:true,
     autoOpen:false,
-    overlay: {
-    backgroundColor: '#000000',
-      opacity: 0.5
-    },
-  });
-        
-        
+    open:function(e) {
+      $("#create_document_form").load("<%= new_database_collection_document_path(@database.name, @collection.name) %>");
+    },    
+    overlay: {backgroundColor: '#000000',opacity: 0.5}
+  });      
+  
 <% end -%>

@@ -3,9 +3,15 @@
   <%= @database.name %> 
 </div> 
 
-<ul id="menu">    
-  <li><%= link_to "Create Collection", new_database_collection_path(@database.name), :id => "create_collection" %></li>
-</ul>
+<div id="actions">   
+  <ul>
+    <li><%= link_to "Create Collection", new_database_collection_path(@database.name), :id => "create_collection" %></li>
+    <li> 
+      <a id="edit_design_document" href="#edit_design">Edit Design Document</a>   
+    </li>        
+  </ul>    
+</div>   
+
 
 <h1><%= @database.name%></h1>
 <ul>  
