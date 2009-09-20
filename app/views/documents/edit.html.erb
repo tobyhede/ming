@@ -1,6 +1,5 @@
-<form action="<%= edit_database_collection_document_path(@database.name, @collection.name, @document["_id"]) %>" method="post">    
+<form action="<%= database_collection_document_path(@database.name, @collection.name, @document["_id"]) %>" method="post">    
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <%= hidden_field_tag :id, @document["_id"] %>
-  <%= text_area_tag :document, params[:document], :id => "edit_document", :class => "json_editor" %>
+  <%= text_area_tag :document, ActiveSupport::JSON.encode(@document), :class => "json_editor" %>
   <%= submit_tag "Save", :class => "ui-state-default ui-corner-all" %>
 </form>  

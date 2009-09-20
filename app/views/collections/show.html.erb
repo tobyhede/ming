@@ -12,7 +12,7 @@
     </li>
     <li> 
       <!-- <a id="edit_design_document" href="#edit_design">Edit Design Document</a>    -->
-      <%= link_to "Edit Design Document", new_database_collection_document_path(@database.name, @collection.name, @design["_id"]) %>
+      <%= link_to "Edit Design Document", edit_database_collection_document_path(@database.name, @collection.name, @design["_id"]), :id => "edit_design_document" %>
             
     </li>  
   </ul>          
@@ -20,6 +20,14 @@
  
 <h1><%= @collection.name %> in <%= @database.name %></h1>
 <p>Viewing <%= pluralize(@documents.count, "document") %> of <%= @count %></p>
+
+<div id="design_document" style="display:none;"><%= ActiveSupport::JSON.encode(@design) %></div>
+  
+<div id="create_document_form" class="hidden"> 
+</div>
+
+<div id="edit_document_form" class="hidden">  
+</div>
 
 <table id="collection_documents" class="ui-widget ui-helper-reset">  
   <thead class="ui-widget-header">
@@ -48,13 +56,6 @@
 
 <%= will_paginate(@documents) %>
 
-<div id="design_document" style="display:none;"><%= ActiveSupport::JSON.encode(@design) %></div>
-  
-<div id="create_document_form" class="hidden"> 
-</div>
-
-<div id="edit_document_form" class="hidden">  
-</div>
 
 <% content_for :javascript do -%>
   $(".hidden").hide();
@@ -62,12 +63,17 @@
   $("table:sortable tbody tr:odd").addClass("odd");
                       
   $("#create_document").click(function(){  
-    $('#create_document_form').dialog("open");
+    $('#create_document_form').dialog("open");        
+    url = $(this).attr("href");    
+    $("#create_document_form").load(url);
     return false;
   });
   
   $("#edit_design_document").click(function(){
-
+    $('#edit_document_form').dialog("open");
+    url = $(this).attr("href");
+    $("#edit_document_form").load(url);         
+    return false;
   });
   
 
@@ -77,9 +83,7 @@
     width:'auto',
     modal:true,
     autoOpen:false,
-    open:function(e) {
-      $("#create_document_form").load("<%= new_database_collection_document_path(@database.name, @collection.name) %>");
-    },
+
     overlay: {backgroundColor: '#000000',opacity: 0.5}
   });
     
@@ -90,9 +94,7 @@
     width:'auto',
     modal:true,
     autoOpen:false,
-    open:function(e) {
-      $("#create_document_form").load("<%= new_database_collection_document_path(@database.name, @collection.name) %>");
-    },    
+
     overlay: {backgroundColor: '#000000',opacity: 0.5}
   });      
   

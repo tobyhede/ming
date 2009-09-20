@@ -1,5 +1,3 @@
-
-
 class DocumentsController < ApplicationController
   
   
@@ -42,10 +40,10 @@ class DocumentsController < ApplicationController
   end
     
   def edit
-    @document = @collection.find({"_id" => params[:id]})
+    @document = @collection.find({"_id" => params[:id]}).next_object()
     respond_to do |format|
-      format.html { render }   
       format.js   { render :layout => false }
+      # format.html { render }   
     end 
   end
   
