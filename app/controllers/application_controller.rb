@@ -14,7 +14,9 @@ class ApplicationController < ActionController::Base
   protected
   
   def set_connection    
-    @connection = Connection.new()
+    # @connection = Connection.new("aws.mongohq.com", 27017, :auto_reconnect => true)    
+    @connection = Connection.new("db.mongohq.com", 27017, :auto_reconnect => true)        
+    
   end
 end
 

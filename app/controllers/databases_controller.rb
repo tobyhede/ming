@@ -6,6 +6,7 @@ class DatabasesController < ApplicationController
 
   def show    
     @database = @connection.db(params[:id])
+    @database.authenticate("fsm","fsm")    
     @collections = @database.collection_names
     @collections.delete("system.indexes")
     # @collections.each{|c|logger.debug(c)}
